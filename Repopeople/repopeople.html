@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Github Users</title>
+</head>
+
+<body style="background-color: rgb(67, 185, 221);">
+
+	<button onclick ="load()"> Load Git Hub User</button>
+
+	<h1>Git Hub Users :</h1>
+
+
+	<div id="output" > </div>
+
+
+
+</body>
+
+<script type="text/javascript">
+	
+	function load() {
+
+		var req= new XMLHttpRequest();
+
+		req.onreadystatechange = function() {
+			if (req.readyState == 4 && req.status == 200) {
+				
+				var people = JSON.parse(req.responseText)
+
+				var output= ' ';
+
+				for(var i in people){
+				output +=
+					'<div style="background-color: lightblue;">' +
+						'<img src="'+people[i].avatar_url+'"width="100px" height="100px">' +
+						'<ul>' +
+							'<li>ID: '+people[i].id+'</li>' +
+							'<li>Login: '+people[i].login+'</li>' +
+							'<li>Repos:'+people[i].repos_url+'</li>'+
+							'<li>Github Link: '+people[i].html_url+'</li>' +
+							'<li>Type:'+people[i].type+'</li>'+
+						'</ul>'+
+					'</div></br><br>';
+				}
+				console.log(output);
+				document.getElementById("output").innerHTML = output;
+
+			}
+		};
+		req.open("GET","https://api.github.com/users",true);
+		req.send();
+		return;
+	}
+
+</script>
+
+</html>
